@@ -38,7 +38,7 @@ namespace GrandHeroFarmer.Helpers
                 {
                     _device = AdbClient.Instance.GetDevices().First();
                     foundDevice = true;
-                    ConsoleLogger.WriteLine(_device.Name + " connected!", Type.Info, false);
+                    ConsoleLogger.WriteLine(" " + _device.Name + " connected!", Type.Info, false);
                     return;
                 }
 
