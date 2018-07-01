@@ -18,7 +18,7 @@ namespace GrandHeroFarmer
             ConsoleLogger.WriteLine("Welcome to Feh Farmer", Helpers.Type.Info, true, ConsoleColor.DarkCyan);
             try
             {
-                Android phone = null; //new Android();
+                Android phone = new Android();
 
                 //Initializing Service Configurations
                 ConsoleLogger.Write("Loading service configurations from xml... ", Helpers.Type.Default);
