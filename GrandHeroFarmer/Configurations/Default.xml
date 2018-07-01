@@ -34,8 +34,6 @@
   </Areas>
   <Timers>
     <CommunicateServerTimer>2</CommunicateServerTimer>
-    <StageLoadTimer>3</StageLoadTimer>
-    <InitialDialogTimer>3</InitialDialogTimer>
-    <StageTimer>13</StageTimer>
+    <StageTimer>10</StageTimer>
   </Timers>
 </Settings>

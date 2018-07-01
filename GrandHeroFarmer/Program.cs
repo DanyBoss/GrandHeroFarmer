@@ -15,7 +15,7 @@ namespace GrandHeroFarmer
     {
         static void Main(string[] args)
         {
-            ConsoleLogger.WriteLine("Welcome to Feh Farmer", Helpers.Type.Info, true, ConsoleColor.DarkYellow);
+            ConsoleLogger.WriteLine("Welcome to Feh Farmer", Helpers.Type.Info, true);
             Android phone = new Android();
 
             //Initializing Service Configurations
@@ -29,14 +29,12 @@ namespace GrandHeroFarmer
             ClickArea acceptAutoBattleButton = new ClickArea(doc.Descendants("AcceptAutoBattleButton").FirstOrDefault());
 
             int communicateServerTimer = ((int)(doc.Descendants("CommunicateServerTimer").FirstOrDefault()) * 1000);
-            int stageLoadTimer = ((int)(doc.Descendants("StageLoadTimer").FirstOrDefault()) * 1000);
-            int initialDialogTimer = ((int)(doc.Descendants("InitialDialogTimer").FirstOrDefault()) * 1000);
             int stageTimer = ((int)(doc.Descendants("StageTimer").FirstOrDefault()) * 1000);
 
             ConsoleLogger.WriteLine("OK", Helpers.Type.Info, false);
 
             ConsoleLogger.WriteLine("Setup is done, press enter to start earning feathers.", Helpers.Type.Info);
-            ConsoleLogger.WriteLine("Press 'Ctrl + C' to exit the application.", Helpers.Type.Info);
+            ConsoleLogger.Write("Press 'Ctrl + C' to exit the application.", Helpers.Type.Info);
             Console.ReadLine();
 
             int iterations = 0;
@@ -45,31 +43,49 @@ namespace GrandHeroFarmer
                 while (true)
                 {
                     Console.WriteLine();
-                    ConsoleLogger.Write("Starting iteration ", Helpers.Type.Default);
+                    ConsoleLogger.Write("Starting iteration ", Helpers.Type.Default, true);
                     ConsoleLogger.WriteLine(iterations.ToString(), Helpers.Type.Info, false);
+
+                    // Click Lunatic Button
                     phone.Tap(startGBHButton.GenerateRandomCoords());
 
+                    // Click Fight Button
                     phone.Tap(fightButton.GenerateRandomCoords());
 
+                    // Communicate Server
                     Thread.Sleep(communicateServerTimer);
+
+                    // Click to skip initial animations
                     phone.Tap(fightButton.GenerateRandomCoords());
 
-                    Thread.Sleep(stageLoadTimer);
+                    // Wait until Dialog starts
+                    Thread.Sleep(2000);
+
+                    // Skip Dialog
                     ConsoleLogger.WriteLine("Skipping initial dialog", Helpers.Type.Default);
                     phone.Tap(skipDialogButton.GenerateRandomCoords());
-                    Thread.Sleep(initialDialogTimer);
 
+                    // Wait for initial animations
+                    Thread.Sleep(3000);
+
+                    // Click Auto Battle
                     ConsoleLogger.WriteLine("Initializing Auto-Battle", Helpers.Type.Default);
                     phone.Tap(autoBattleButton.GenerateRandomCoords());
 
+                    // CLick Accept
                     phone.Tap(acceptAutoBattleButton.GenerateRandomCoords());
 
+                    // Wait for battle to end
                     ConsoleLogger.WriteLine("Waiting for battle to end", Helpers.Type.Default);
                     Thread.Sleep(stageTimer);
 
+                    // Click again to skip animations
                     phone.Tap(fightButton.GenerateRandomCoords());
-                    Thread.Sleep(communicateServerTimer);
 
+                    // Wait to send result to server
+                    Thread.Sleep(communicateServerTimer + 1000);
+
+                    // All done!
                     ConsoleLogger.Write("Finished iteration ", Helpers.Type.Default);
                     ConsoleLogger.WriteLine(iterations.ToString(), Helpers.Type.Info, false);
 
