@@ -1,0 +1,10 @@
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Debug\Feh Farmer.exe.config
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Debug\Feh Farmer.exe
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Debug\Feh Farmer.pdb
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Debug\Feh Farmer.csprojAssemblyReference.cache
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Debug\Feh Farmer.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Debug\Feh Farmer.exe
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Debug\Feh Farmer.pdb
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Debug\SharpAdbClient.dll
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Debug\Feh Farmer.csproj.CopyComplete
+C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Debug\Configurations\Default.xml
