@@ -38,7 +38,7 @@ namespace GrandHeroFarmer
                 ConsoleLogger.Write("Press 'Ctrl + C' to exit the application.", Helpers.Type.Info);
                 Console.ReadLine();
 
-                int iterations = 0;
+                int iterations = 1;
 
                 Thread thread = new Thread(() => {
                     while (true)
