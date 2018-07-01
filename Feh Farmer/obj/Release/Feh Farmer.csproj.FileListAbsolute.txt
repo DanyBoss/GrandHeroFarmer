@@ -1,9 +1,0 @@
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Release\Configurations\Default.xml
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Release\Feh Farmer.exe.config
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Release\Feh Farmer.exe
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Release\Feh Farmer.pdb
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\bin\Release\SharpAdbClient.dll
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Release\Feh Farmer.csproj.CoreCompileInputs.cache
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Release\Feh Farmer.csproj.CopyComplete
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Release\Feh Farmer.exe
-C:\Users\Daniel\Documents\GitHub\Feh Farmer\Feh Farmer\obj\Release\Feh Farmer.pdb

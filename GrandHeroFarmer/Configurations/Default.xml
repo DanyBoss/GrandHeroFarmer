@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Areas>
+    <StartGHBButton>
+      <TopLeftX>100</TopLeftX>
+      <TopLeftY>850</TopLeftY>
+      <BottomRightX>1000</BottomRightX>
+      <BottomRightY>1000</BottomRightY>
+    </StartGHBButton>
+    <FightButton>
+      <TopLeftX>200</TopLeftX>
+      <TopLeftY>1130</TopLeftY>
+      <BottomRightX>900</BottomRightX>
+      <BottomRightY>1230</BottomRightY>
+    </FightButton>
+    <SkipDialogButton>
+      <TopLeftX>750</TopLeftX>
+      <TopLeftY>50</TopLeftY>
+      <BottomRightX>1000</BottomRightX>
+      <BottomRightY>100</BottomRightY>
+    </SkipDialogButton>
+    <AutoBattleButton>
+      <TopLeftX>770</TopLeftX>
+      <TopLeftY>1770</TopLeftY>
+      <BottomRightX>900</BottomRightX>
+      <BottomRightY>1900</BottomRightY>
+    </AutoBattleButton>
+    <AcceptAutoBattleButton>
+      <TopLeftX>230</TopLeftX>
+      <TopLeftY>900</TopLeftY>
+      <BottomRightX>870</BottomRightX>
+      <BottomRightY>1000</BottomRightY>
+    </AcceptAutoBattleButton>
+  </Areas>
+  <Timers>
+    <CommunicateServerTimer>2</CommunicateServerTimer>
+    <StageLoadTimer>3</StageLoadTimer>
+    <InitialDialogTimer>3</InitialDialogTimer>
+    <StageTimer>13</StageTimer>
+  </Timers>
+</Settings>

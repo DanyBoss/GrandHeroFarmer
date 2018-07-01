@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DF9A01C1-F523-4E02-AD5A-73A084F65132}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Feh_Farmer</RootNamespace>
-    <AssemblyName>Feh Farmer</AssemblyName>
+    <RootNamespace>GrandHeroFarmer</RootNamespace>
+    <AssemblyName>GrandHeroFarmer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
