@@ -11,13 +11,6 @@ namespace GrandHeroFarmer.Helpers
     static class ConsoleLogger
     {
 
-        public static void WriteSeparator()
-        {
-            Console.WriteLine();
-            Console.Write(@"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-            Console.WriteLine();
-        }
-
         public static void WriteLine(string value, Type type, bool showTimestamp = true, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             Write(value, type, showTimestamp, backgroundColor);
@@ -28,27 +21,26 @@ namespace GrandHeroFarmer.Helpers
         {
             string timeLog = (showTimestamp ? DateTime.UtcNow.ToString("[HH:mm:ss] >> ") : String.Empty);
 
+            ConsoleColor color;
             switch (type)
             {
                 case Type.Info:
-                    Console.Write(timeLog);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.BackgroundColor = backgroundColor;
-                    Console.Write(value);
-                    Console.ResetColor();
+                    color = ConsoleColor.Cyan;
                     break;
                 case Type.Error:
-                    Console.Write(timeLog);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.BackgroundColor = backgroundColor;
-                    Console.Write(value);
-                    Console.ResetColor();
+                    color = ConsoleColor.Red;
                     break;
                 default:
-                    Console.Write(timeLog);
-                    Console.Write(value);
+                    color = ConsoleColor.Gray;
                     break;
             }
+
+            // Print stuff
+            Console.Write(timeLog);
+            Console.ForegroundColor = color;
+            Console.BackgroundColor = backgroundColor;
+            Console.Write(value);
+            Console.ResetColor();
         }
 
     }
