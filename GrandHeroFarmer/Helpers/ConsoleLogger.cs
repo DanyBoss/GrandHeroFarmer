@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Feh_Farmer.Helpers
+namespace GrandHeroFarmer.Helpers
 {
     enum Type { Info, Error, Default };
 

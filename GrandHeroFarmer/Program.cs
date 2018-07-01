@@ -1,4 +1,4 @@
-﻿using Feh_Farmer.Helpers;
+﻿using GrandHeroFarmer.Helpers;
 using SharpAdbClient;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Feh_Farmer
+namespace GrandHeroFarmer
 {
     class Program
     {

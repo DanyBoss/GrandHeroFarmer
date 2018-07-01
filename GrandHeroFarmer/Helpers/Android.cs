@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Feh_Farmer.Helpers
+namespace GrandHeroFarmer.Helpers
 {
     public class Android
     {
