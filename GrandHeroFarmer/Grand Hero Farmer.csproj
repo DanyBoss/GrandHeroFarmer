@@ -30,10 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpAdbClient, Version=2.2.0.0, Culture=neutral, PublicKeyToken=d728076f5d82a2e8, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpAdbClient.2.2.6\lib\net451\SharpAdbClient.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\SharpAdbClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,6 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assemblies\SharpAdbClient.dll" />
     <Content Include="Configurations\Default.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
