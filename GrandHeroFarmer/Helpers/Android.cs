@@ -33,19 +33,19 @@ namespace GrandHeroFarmer.Helpers
             bool foundDevice = false;
             while (!foundDevice)
             {
-                ConsoleLogger.Write("Trying to get device from adb...", Type.Default);
+                ConsoleLogger.Write("Trying to get device information... ", Type.Default);
                 if(AdbClient.Instance.GetDevices().Count != 0)
                 {
                     _device = AdbClient.Instance.GetDevices().First();
                     foundDevice = true;
-                    ConsoleLogger.WriteLine(" " + _device.Name + " connected!", Type.Info, false);
+                    ConsoleLogger.WriteLine(_device.Name + " connected!", Type.Info, false);
                     return;
                 }
 
-                ConsoleLogger.WriteLine("No Device was found! Is the phone connected?", Type.Error);
+                ConsoleLogger.WriteLine("Failed! No Device was found!", Type.Error, false);
                 ConsoleLogger.Write("Check the connection and press", Type.Default);
                 ConsoleLogger.Write(" Enter ", Type.Info, false);
-                ConsoleLogger.WriteLine("to try again.", Type.Default, false);
+                ConsoleLogger.Write("to try again.", Type.Default, false);
                 Console.ReadLine();
             }
         }
