@@ -1,6 +1,7 @@
 ﻿using SharpAdbClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,18 +12,30 @@ namespace GrandHeroFarmer.Helpers
 {
     public class Android
     {
+        private readonly AdbServer _server;
         private DeviceData _device;
 
         public Android()
         {
-            AdbServer server = new AdbServer();
-            var result = server.StartServer(@"adb\adb.exe", restartServerIfNewer: false);
+            if (File.Exists(@"adb\adb.exe"))
+            {
+                _server = new AdbServer();
+                _server.StartServer(@"adb\adb.exe", restartServerIfNewer: false);
+                ConnectToAndroid();
 
-            ConnectToAndroid();
+                var monitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
+                monitor.DeviceDisconnected += this.OnDeviceDisconnected;
+                monitor.Start();
+            }
+            else
+            {
+                ConsoleLogger.Write("adb.exe not found. ", Type.Error, true);
+                ConsoleLogger.WriteLine("Did you extract everything from the zip?", Type.Default, false);
+                ConsoleLogger.WriteLine("Press Enter to exit.", Type.Default, true);
 
-            var monitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
-            monitor.DeviceDisconnected += this.OnDeviceDisconnected;
-            monitor.Start();
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
         }
 
         /// <summary>
@@ -36,12 +49,12 @@ namespace GrandHeroFarmer.Helpers
                 ConsoleLogger.Write("Trying to get device information... ", Type.Default);
                 if(AdbClient.Instance.GetDevices().Count != 0)
                 {
+                    
                     _device = AdbClient.Instance.GetDevices().First();
                     foundDevice = true;
                     ConsoleLogger.WriteLine(_device.Name + " connected!", Type.Info, false);
                     return;
                 }
-
                 ConsoleLogger.WriteLine("Failed! No Device was found!", Type.Error, false);
                 ConsoleLogger.Write("Check the connection and press", Type.Default);
                 ConsoleLogger.Write(" Enter ", Type.Info, false);
