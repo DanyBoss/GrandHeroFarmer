@@ -1,7 +1,8 @@
-﻿using GrandHeroFarmer.Helpers;
+﻿using GrandHeroFarmer.Modules;
 using SharpAdbClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,15 +14,35 @@ namespace GrandHeroFarmer
 {
     class Program
     {
+        private static readonly List<string> puns = new List<string>
+        {
+            "Just for feathers and love",
+            "Just one more +10 and I'm done",
+            "We need more Armads in the game",
+            "Just Tiki.",
+            "r/OrderOfHeroes is pretty neat",
+            "/feg/ is cozy sometimes"
+        };
+
+        public static readonly Random rnd = new Random();
+
         static void Main(string[] args)
         {
-            ConsoleLogger.WriteLine("Welcome to Feh Farmer", Helpers.Type.Info, true, ConsoleColor.DarkCyan);
+            Console.Title = "Grand Hero Farmer v" + Helpers.GetProgramVersion();
+            Console.Clear();
+
+            Console.WriteLine();
+            ConsoleLogger.WriteCenter("Grand Hero Farmer", textColor: ConsoleColor.Cyan, backgroundColor: ConsoleColor.DarkCyan);
+
+            ConsoleLogger.WriteCenter(puns[rnd.Next(puns.Count)], true, textColor: ConsoleColor.Magenta);
+
+            ConsoleLogger.WriteTime("Starting program...");
             try
             {
                 Android phone = new Android();
 
                 //Initializing Service Configurations
-                ConsoleLogger.Write("Loading service configurations from xml... ", Helpers.Type.Default);
+                ConsoleLogger.WriteTime("Loading service configurations from xml... ", false);
                 XDocument doc = XDocument.Load("Configurations/Default.xml");
                 ClickArea startGBHButton = new ClickArea(doc.Descendants("StartGHBButton").FirstOrDefault());
                 ClickArea fightButton = new ClickArea(doc.Descendants("FightButton").FirstOrDefault());
@@ -31,21 +52,23 @@ namespace GrandHeroFarmer
 
                 int communicateServerTimer = ((int)(doc.Descendants("CommunicateServerTimer").FirstOrDefault()) * 1000);
                 int stageTimer = ((int)(doc.Descendants("StageTimer").FirstOrDefault()) * 1000);
+                ConsoleLogger.Write("OK", textColor: ConsoleColor.Cyan);
 
-                ConsoleLogger.WriteLine("OK", Helpers.Type.Info, false);
-
-                ConsoleLogger.WriteLine("Setup is done, press enter to start earning feathers.", Helpers.Type.Info);
-                ConsoleLogger.Write("Press 'Ctrl + C' to exit the application.", Helpers.Type.Info);
+                ConsoleLogger.WriteTime("Setup is done, press enter to start earning feathers.", textColor: ConsoleColor.Cyan);
+                ConsoleLogger.WriteTime("Press 'Ctrl + C' to exit the application.", newLine: false, textColor: ConsoleColor.Cyan);
                 Console.ReadLine();
 
-                int iterations = 1;
+                int cicles = 1;
 
                 Thread thread = new Thread(() => {
+
+                    Console.Title = "Grand Hero Farmer - Farming";
+
                     while (true)
                     {
                         Console.WriteLine();
-                        ConsoleLogger.Write("Starting iteration ", Helpers.Type.Default, true);
-                        ConsoleLogger.WriteLine(iterations.ToString(), Helpers.Type.Info, false);
+                        ConsoleLogger.WriteTime("Starting cicle ", false);
+                        ConsoleLogger.Write("[" + cicles.ToString() + "]", textColor: ConsoleColor.Cyan);
 
                         // Click Lunatic Button
                         phone.Tap(startGBHButton.GenerateRandomCoords());
@@ -63,53 +86,52 @@ namespace GrandHeroFarmer
                         Thread.Sleep(2000);
 
                         // Skip Dialog
-                        ConsoleLogger.WriteLine("Skipping initial dialog", Helpers.Type.Default);
+                        ConsoleLogger.WriteTime("Skipping initial dialog");
                         phone.Tap(skipDialogButton.GenerateRandomCoords());
 
                         // Wait for initial animations
                         Thread.Sleep(3000);
 
                         // Click Auto Battle
-                        ConsoleLogger.WriteLine("Initializing Auto-Battle", Helpers.Type.Default);
+                        ConsoleLogger.WriteTime("Initializing Auto-Battle");
                         phone.Tap(autoBattleButton.GenerateRandomCoords());
 
                         // CLick Accept
                         phone.Tap(acceptAutoBattleButton.GenerateRandomCoords());
 
                         // Wait for battle to end
-                        ConsoleLogger.WriteLine("Waiting for battle to end", Helpers.Type.Default);
+                        ConsoleLogger.WriteTime("Waiting for battle to end");
                         Thread.Sleep(stageTimer);
 
                         // Click again to skip animations
                         phone.Tap(fightButton.GenerateRandomCoords());
 
+                        // All done!
+                        ConsoleLogger.WriteTime("Finished cicle ", false);
+                        ConsoleLogger.Write("[" + cicles.ToString() + "]", textColor: ConsoleColor.Cyan);
+
                         // Wait to send result to server
                         Thread.Sleep(communicateServerTimer + 1000);
 
-                        // All done!
-                        ConsoleLogger.Write("Finished iteration ", Helpers.Type.Default);
-                        ConsoleLogger.WriteLine(iterations.ToString(), Helpers.Type.Info, false);
-
-                        iterations++;
+                        cicles++;
                     }
-
                 });
                 thread.Start();
 
             }
             catch (System.IO.FileNotFoundException)
             {
-                ConsoleLogger.WriteLine("FAILED", Helpers.Type.Error, false);
-                ConsoleLogger.WriteLine("Couldn't Load XML File. Press Enter to exit the application.", Helpers.Type.Error, true);
+                ConsoleLogger.Write("FAILED", textColor: ConsoleColor.Red);
+                ConsoleLogger.WriteTime("Couldn't Load XML File. Press Enter to exit the application.");
             }
             catch (NullReferenceException)
             {
-                ConsoleLogger.WriteLine("FAILED", Helpers.Type.Error, false);
-                ConsoleLogger.WriteLine("Looks like your XML file is malformed. Press Enter to exit the application.", Helpers.Type.Error, true);
+                ConsoleLogger.Write("FAILED", textColor: ConsoleColor.Red);
+                ConsoleLogger.WriteTime("Looks like your XML file is malformed. Press Enter to exit the application.");
             }
             catch (Exception ex)
             {
-                ConsoleLogger.WriteLine(ex.ToString(), Helpers.Type.Error, false);
+                ConsoleLogger.Write(ex.ToString(), textColor: ConsoleColor.Red);
             }
             finally
             {

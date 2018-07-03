@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace GrandHeroFarmer.Helpers
+namespace GrandHeroFarmer.Modules
 {
     public class Android
     {
@@ -29,9 +29,9 @@ namespace GrandHeroFarmer.Helpers
             }
             else
             {
-                ConsoleLogger.Write("adb.exe not found. ", Type.Error, true);
-                ConsoleLogger.WriteLine("Did you extract everything from the zip?", Type.Default, false);
-                ConsoleLogger.WriteLine("Press Enter to exit.", Type.Default, true);
+                ConsoleLogger.Write("adb.exe not found. ", textColor: ConsoleColor.Red);
+                ConsoleLogger.Write("Did you extract everything from the zip?");
+                ConsoleLogger.Write("Press Enter to exit.");
 
                 Console.ReadLine();
                 Environment.Exit(0);
@@ -46,19 +46,19 @@ namespace GrandHeroFarmer.Helpers
             bool foundDevice = false;
             while (!foundDevice)
             {
-                ConsoleLogger.Write("Trying to get device information... ", Type.Default);
+                ConsoleLogger.WriteTime("Trying to get device information... ", false);
                 if(AdbClient.Instance.GetDevices().Count != 0)
                 {
                     
                     _device = AdbClient.Instance.GetDevices().First();
                     foundDevice = true;
-                    ConsoleLogger.WriteLine(_device.Name + " connected!", Type.Info, false);
+                    ConsoleLogger.Write(_device.Name + " connected!", textColor: ConsoleColor.Cyan);
                     return;
                 }
-                ConsoleLogger.WriteLine("Failed! No Device was found!", Type.Error, false);
-                ConsoleLogger.Write("Check the connection and press", Type.Default);
-                ConsoleLogger.Write(" Enter ", Type.Info, false);
-                ConsoleLogger.Write("to try again.", Type.Default, false);
+                ConsoleLogger.Write("Failed! No Device was found!", textColor: ConsoleColor.Red);
+                ConsoleLogger.WriteTime("Check the connection and press", false);
+                ConsoleLogger.Write(" Enter ", false, ConsoleColor.Cyan);
+                ConsoleLogger.Write("to try again.");
                 Console.ReadLine();
             }
         }
@@ -80,8 +80,8 @@ namespace GrandHeroFarmer.Helpers
         // Monitor Functions
         void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
         {
-            ConsoleLogger.WriteLine("The device " + _device.Name +" has disconnected to this PC", Type.Error);
-            ConsoleLogger.WriteLine("Please restart the application and go back to the Mission Select Menu.", Type.Default);
+            ConsoleLogger.WriteTime("The device " + _device.Name +" has disconnected to this PC", textColor: ConsoleColor.Red);
+            ConsoleLogger.WriteTime("Please restart the application and go back to the Mission Select Menu.");
             ConnectToAndroid();
         }
     }
