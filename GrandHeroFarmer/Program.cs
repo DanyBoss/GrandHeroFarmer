@@ -116,6 +116,7 @@ namespace GrandHeroFarmer
                         cicles++;
                     }
                 });
+
                 thread.Start();
 
             }

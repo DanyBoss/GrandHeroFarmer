@@ -23,6 +23,7 @@ namespace GrandHeroFarmer.Modules
                 _server.StartServer(@"adb\adb.exe", restartServerIfNewer: false);
                 ConnectToAndroid();
 
+                // Initialize device monitor
                 var monitor = new DeviceMonitor(new AdbSocket(new IPEndPoint(IPAddress.Loopback, AdbClient.AdbServerPort)));
                 monitor.DeviceDisconnected += this.OnDeviceDisconnected;
                 monitor.Start();
@@ -66,10 +67,11 @@ namespace GrandHeroFarmer.Modules
         /// <summary>
         /// Sends a tap event to the connected device with the given coordenates
         /// </summary>
-        /// <param name="pX">X Coordinate</param>
-        /// <param name="pY">Y Coordinate</param>
+        /// <param name="coordenates">Coordenates Tuple (X, Y)</param>
         public void Tap(Tuple<int, int> coordenates)
         {
+
+            //TODO Check if device is null
             string command = "input tap " + coordenates.Item1 + " " + coordenates.Item2;
 
             IShellOutputReceiver receiver = null;
@@ -82,7 +84,8 @@ namespace GrandHeroFarmer.Modules
         {
             ConsoleLogger.WriteTime("The device " + _device.Name +" has disconnected to this PC", textColor: ConsoleColor.Red);
             ConsoleLogger.WriteTime("Please restart the application and go back to the Mission Select Menu.");
-            ConnectToAndroid();
+
+            Environment.Exit(0);
         }
     }
 
