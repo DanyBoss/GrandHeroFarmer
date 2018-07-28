@@ -1,5 +1,6 @@
 # Grand Hero Farmer
 
+![preview](https://raw.githubusercontent.com/DanyBoss/GrandHeroFarmer/master/preview.png)
 Grand Hero Farmer is a tool to farm Feathers on the mobile game 'Fire Emblem Heroes'. This works because the game recently removed all Stamina costs on a game mode called Grand Hero Battle and in doing such it allows users to keep consistently repeating these maps to get Feathers.
 
 This tool take some precations to not be "detected" as a bot, such as randomly changing coordenates and changing time delays, it is pretty much impossible for Nintendo to detect this as a bot.
