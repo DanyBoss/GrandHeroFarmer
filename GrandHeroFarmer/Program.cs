@@ -1,18 +1,14 @@
 ﻿using GrandHeroFarmer.Modules;
-using SharpAdbClient;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace GrandHeroFarmer
 {
-    class Program
+    internal class Program
     {
         private static readonly List<string> puns = new List<string>
         {
@@ -26,22 +22,21 @@ namespace GrandHeroFarmer
 
         public static readonly Random rnd = new Random();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.Title = "Grand Hero Farmer v" + Helpers.GetProgramVersion();
+            Console.Title = string.Format("Grand Hero Farmer v{0}", Helpers.GetProgramVersion());
             Console.Clear();
 
             Console.WriteLine();
             ConsoleLogger.WriteCenter("Grand Hero Farmer", textColor: ConsoleColor.Cyan, backgroundColor: ConsoleColor.DarkCyan);
-
-            ConsoleLogger.WriteCenter(puns[rnd.Next(puns.Count)], true, textColor: ConsoleColor.Magenta);
-
+            ConsoleLogger.WriteCenter(puns[rnd.Next(puns.Count)], newLine: true, textColor: ConsoleColor.Magenta);
             ConsoleLogger.WriteTime("Starting program...");
+
             try
             {
                 Android phone = new Android();
 
-                //Initializing Service Configurations
+                // Initializing Service Configurations
                 ConsoleLogger.WriteTime("Loading service configurations from xml... ", false);
                 XDocument doc = XDocument.Load("Configurations/Default.xml");
                 ClickArea startGBHButton = new ClickArea(doc.Descendants("StartGHBButton").FirstOrDefault());
@@ -50,25 +45,25 @@ namespace GrandHeroFarmer
                 ClickArea autoBattleButton = new ClickArea(doc.Descendants("AutoBattleButton").FirstOrDefault());
                 ClickArea acceptAutoBattleButton = new ClickArea(doc.Descendants("AcceptAutoBattleButton").FirstOrDefault());
 
-                int communicateServerTimer = ((int)(doc.Descendants("CommunicateServerTimer").FirstOrDefault()) * 1000);
-                int stageTimer = ((int)(doc.Descendants("StageTimer").FirstOrDefault()) * 1000);
+                int communicateServerTimer = (int)doc.Descendants("CommunicateServerTimer").FirstOrDefault() * 1000;
+                int stageTimer = (int)doc.Descendants("StageTimer").FirstOrDefault() * 1000;
                 ConsoleLogger.Write("OK", textColor: ConsoleColor.Cyan);
 
                 ConsoleLogger.WriteTime("Setup is done, press enter to start earning feathers.", textColor: ConsoleColor.Cyan);
                 ConsoleLogger.WriteTime("Press 'Ctrl + C' to exit the application.", newLine: false, textColor: ConsoleColor.Cyan);
                 Console.ReadLine();
 
-                int cicles = 1;
+                int ciclesCompleted = 1;
 
-                Thread thread = new Thread(() => {
-
-                    Console.Title = "Grand Hero Farmer - Farming";
+                Thread thread = new Thread(() =>
+                {
+                    Console.Title = string.Format("{0} - Farming", Console.Title);
 
                     while (true)
                     {
                         Console.WriteLine();
                         ConsoleLogger.WriteTime("Starting cicle ", false);
-                        ConsoleLogger.Write("[" + cicles.ToString() + "]", textColor: ConsoleColor.Cyan);
+                        ConsoleLogger.Write(string.Format("[{0}]", ciclesCompleted.ToString()), textColor: ConsoleColor.Cyan);
 
                         // Click Lunatic Button
                         phone.Tap(startGBHButton.GenerateRandomCoords());
@@ -108,19 +103,18 @@ namespace GrandHeroFarmer
 
                         // All done!
                         ConsoleLogger.WriteTime("Finished cicle ", false);
-                        ConsoleLogger.Write("[" + cicles.ToString() + "]", textColor: ConsoleColor.Cyan);
+                        ConsoleLogger.Write(string.Format("[{0}]", ciclesCompleted.ToString()), textColor: ConsoleColor.Cyan);
 
                         // Wait to send result to server
                         Thread.Sleep(communicateServerTimer + 1000);
 
-                        cicles++;
+                        ciclesCompleted++;
                     }
                 });
 
                 thread.Start();
-
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 ConsoleLogger.Write("FAILED", textColor: ConsoleColor.Red);
                 ConsoleLogger.WriteTime("Couldn't Load XML File. Press Enter to exit the application.");

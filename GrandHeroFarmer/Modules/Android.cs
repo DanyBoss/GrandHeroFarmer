@@ -1,11 +1,8 @@
 ﻿using SharpAdbClient;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace GrandHeroFarmer.Modules
@@ -30,7 +27,7 @@ namespace GrandHeroFarmer.Modules
             }
             else
             {
-                ConsoleLogger.Write("adb.exe not found. ", textColor: ConsoleColor.Red);
+                ConsoleLogger.Write("adb.exe not found.", textColor: ConsoleColor.Red);
                 ConsoleLogger.Write("Did you extract everything from the zip?");
                 ConsoleLogger.Write("Press Enter to exit.");
 
@@ -48,9 +45,8 @@ namespace GrandHeroFarmer.Modules
             while (!foundDevice)
             {
                 ConsoleLogger.WriteTime("Trying to get device information... ", false);
-                if(AdbClient.Instance.GetDevices().Count != 0)
+                if (AdbClient.Instance.GetDevices().Count != 0)
                 {
-                    
                     _device = AdbClient.Instance.GetDevices().First();
                     foundDevice = true;
                     ConsoleLogger.Write(_device.Name + " connected!", textColor: ConsoleColor.Cyan);
@@ -70,7 +66,6 @@ namespace GrandHeroFarmer.Modules
         /// <param name="coordenates">Coordenates Tuple (X, Y)</param>
         public void Tap(Tuple<int, int> coordenates)
         {
-
             //TODO Check if device is null
             string command = "input tap " + coordenates.Item1 + " " + coordenates.Item2;
 
@@ -78,11 +73,11 @@ namespace GrandHeroFarmer.Modules
 
             AdbClient.Instance.ExecuteRemoteCommand(command, _device, receiver);
         }
-        
+
         // Monitor Functions
-        void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
+        private void OnDeviceDisconnected(object sender, DeviceDataEventArgs e)
         {
-            ConsoleLogger.WriteTime("The device " + _device.Name +" has disconnected to this PC", textColor: ConsoleColor.Red);
+            ConsoleLogger.WriteTime("The device " + _device.Name + " has disconnected to this PC", textColor: ConsoleColor.Red);
             ConsoleLogger.WriteTime("Please restart the application and go back to the Mission Select Menu.");
 
             Environment.Exit(0);
@@ -107,14 +102,15 @@ namespace GrandHeroFarmer.Modules
         /// Creates a click area from a XElement in a XML File.
         /// </summary>
         /// <param name="element"></param>
-        public ClickArea(XElement element) 
+        public ClickArea(XElement element)
             : this
             (
-                (int) element.Descendants("TopLeftX").FirstOrDefault(),
-                (int) element.Descendants("TopLeftY").FirstOrDefault(),
-                (int) element.Descendants("BottomRightX").FirstOrDefault(),
-                (int) element.Descendants("BottomRightY").FirstOrDefault()
-            ) { }
+                (int)element.Descendants("TopLeftX").FirstOrDefault(),
+                (int)element.Descendants("TopLeftY").FirstOrDefault(),
+                (int)element.Descendants("BottomRightX").FirstOrDefault(),
+                (int)element.Descendants("BottomRightY").FirstOrDefault()
+            )
+        { }
 
         public Tuple<int, int> GenerateRandomCoords()
         {

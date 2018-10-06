@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GrandHeroFarmer.Modules
 {
-    enum Type { Info = ConsoleColor.Cyan, Error = ConsoleColor.Red, Default = ConsoleColor.Gray };
+    internal enum Type
+    { Info = ConsoleColor.Cyan, Error = ConsoleColor.Red, Default = ConsoleColor.Gray };
 
-    static class ConsoleLogger
+    /// <summary>
+    /// Internal Helper logger class.
+    /// </summary>
+    internal static class ConsoleLogger
     {
         public static void Write(string value, bool newLine = true, ConsoleColor textColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
@@ -34,9 +34,7 @@ namespace GrandHeroFarmer.Modules
         public static void WriteCenter(string value, bool newLine = true, ConsoleColor textColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             Console.SetCursorPosition((Console.WindowWidth - value.Length) / 2, Console.CursorTop);
-
             Write(value, newLine, textColor, backgroundColor);
         }
-
     }
 }
