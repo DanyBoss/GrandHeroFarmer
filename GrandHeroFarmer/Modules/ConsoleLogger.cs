@@ -5,9 +5,6 @@ namespace GrandHeroFarmer.Modules
     internal enum Type
     { Info = ConsoleColor.Cyan, Error = ConsoleColor.Red, Default = ConsoleColor.Gray };
 
-    /// <summary>
-    /// Internal Helper logger class.
-    /// </summary>
     internal static class ConsoleLogger
     {
         public static void Write(string value, bool newLine = true, ConsoleColor textColor = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)

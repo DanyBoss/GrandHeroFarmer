@@ -7,12 +7,12 @@ using System.Xml.Linq;
 
 namespace GrandHeroFarmer.Modules
 {
-    public class Android
+    public class AdbWrapper
     {
         private readonly AdbServer _server;
         private DeviceData _device;
 
-        public Android()
+        public AdbWrapper()
         {
             if (File.Exists(@"adb\adb.exe"))
             {

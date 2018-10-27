@@ -1,4 +1,5 @@
-﻿using GrandHeroFarmer.Modules;
+﻿using GrandHeroFarmer.Bot;
+using GrandHeroFarmer.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,26 +35,20 @@ namespace GrandHeroFarmer
 
             try
             {
-                Android phone = new Android();
+                AdbWrapper adb = new AdbWrapper();
 
-                // Initializing Service Configurations
-                ConsoleLogger.WriteTime("Loading service configurations from xml... ", false);
-                XDocument doc = XDocument.Load("Configurations/Default.xml");
-                ClickArea startGBHButton = new ClickArea(doc.Descendants("StartGHBButton").FirstOrDefault());
-                ClickArea fightButton = new ClickArea(doc.Descendants("FightButton").FirstOrDefault());
-                ClickArea skipDialogButton = new ClickArea(doc.Descendants("SkipDialogButton").FirstOrDefault());
-                ClickArea autoBattleButton = new ClickArea(doc.Descendants("AutoBattleButton").FirstOrDefault());
-                ClickArea acceptAutoBattleButton = new ClickArea(doc.Descendants("AcceptAutoBattleButton").FirstOrDefault());
+                // Initializing Bot Configurations
+                ConsoleLogger.WriteTime("Loading bot configurations from xml... ", false);
+                BotConfiguration botConfig = new BotConfiguration("configs");
+                ConsoleLogger.Write("OK", textColor: ConsoleColor.Cyan);
 
-                int communicateServerTimer = (int)doc.Descendants("CommunicateServerTimer").FirstOrDefault() * 1000;
-                int stageTimer = (int)doc.Descendants("StageTimer").FirstOrDefault() * 1000;
+                ConsoleLogger.WriteTime("Initializing bot instance... ", false);
+                FehBot bot = new FehBot(botConfig);
                 ConsoleLogger.Write("OK", textColor: ConsoleColor.Cyan);
 
                 ConsoleLogger.WriteTime("Setup is done, press enter to start earning feathers.", textColor: ConsoleColor.Cyan);
                 ConsoleLogger.WriteTime("Press 'Ctrl + C' to exit the application.", newLine: false, textColor: ConsoleColor.Cyan);
                 Console.ReadLine();
-
-                int ciclesCompleted = 1;
 
                 Thread thread = new Thread(() =>
                 {
@@ -61,54 +56,7 @@ namespace GrandHeroFarmer
 
                     while (true)
                     {
-                        Console.WriteLine();
-                        ConsoleLogger.WriteTime("Starting cicle ", false);
-                        ConsoleLogger.Write(string.Format("[{0}]", ciclesCompleted.ToString()), textColor: ConsoleColor.Cyan);
-
-                        // Click Lunatic Button
-                        phone.Tap(startGBHButton.GenerateRandomCoords());
-
-                        // Click Fight Button
-                        phone.Tap(fightButton.GenerateRandomCoords());
-
-                        // Communicate Server
-                        Thread.Sleep(communicateServerTimer);
-
-                        // Click to skip initial animations
-                        phone.Tap(fightButton.GenerateRandomCoords());
-
-                        // Wait until Dialog starts
-                        Thread.Sleep(2000);
-
-                        // Skip Dialog
-                        ConsoleLogger.WriteTime("Skipping initial dialog");
-                        phone.Tap(skipDialogButton.GenerateRandomCoords());
-
-                        // Wait for initial animations
-                        Thread.Sleep(3000);
-
-                        // Click Auto Battle
-                        ConsoleLogger.WriteTime("Initializing Auto-Battle");
-                        phone.Tap(autoBattleButton.GenerateRandomCoords());
-
-                        // CLick Accept
-                        phone.Tap(acceptAutoBattleButton.GenerateRandomCoords());
-
-                        // Wait for battle to end
-                        ConsoleLogger.WriteTime("Waiting for battle to end");
-                        Thread.Sleep(stageTimer);
-
-                        // Click again to skip animations
-                        phone.Tap(fightButton.GenerateRandomCoords());
-
-                        // All done!
-                        ConsoleLogger.WriteTime("Finished cicle ", false);
-                        ConsoleLogger.Write(string.Format("[{0}]", ciclesCompleted.ToString()), textColor: ConsoleColor.Cyan);
-
-                        // Wait to send result to server
-                        Thread.Sleep(communicateServerTimer + 1000);
-
-                        ciclesCompleted++;
+                        bot.Run(adb);
                     }
                 });
 

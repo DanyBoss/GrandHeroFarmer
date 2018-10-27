@@ -52,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\Android.cs" />
+    <Compile Include="Bot\FehBot.cs" />
+    <Compile Include="Bot\BotConfiguration.cs" />
+    <Compile Include="Modules\AdbWrapper.cs" />
     <Compile Include="Modules\ConsoleLogger.cs" />
     <Compile Include="Modules\Helpers.cs" />
     <Compile Include="Program.cs" />
@@ -69,7 +71,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assemblies\SharpAdbClient.dll" />
-    <Content Include="Configurations\Default.xml">
+    <Content Include="configs\Thursday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Wednesday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Tuesday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Monday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Sunday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Saturday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Friday.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="configs\Default.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\razz-berry.ico" />
